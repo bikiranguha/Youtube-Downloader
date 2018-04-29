@@ -69,29 +69,34 @@ class ExampleApp(QtGui.QMainWindow, ydDesign.Ui_MainWindow):
 
 				elif self.vid_aud.isChecked() == True: # video + audio	
 					# start by trying to download highest quality, then progressively lower quality till match found
-
 					try:
-						ydl_opts = {'format':'137+140','logger': logger}
+						ydl_opts = {'format':'best','logger': logger}
 						self.thread = YoutubeDownload(url, ydl_opts)
-						self.thread.start()
-
-					except:
+						self.thread.start()		
+					except:				
 						try:
-							ydl_opts = {'format':'135+140','logger': logger}
+							ydl_opts = {'format':'137+140','logger': logger}
 							self.thread = YoutubeDownload(url, ydl_opts)
 							self.thread.start()
+
 						except:
 							try:
-								ydl_opts = {'format':'134+140','logger': logger}
+								ydl_opts = {'format':'135+140','logger': logger}
 								self.thread = YoutubeDownload(url, ydl_opts)
-								self.thread.start()	
+								self.thread.start()
 							except:
 								try:
-									ydl_opts = {'format':'133+140','logger': logger}
+									ydl_opts = {'format':'134+140','logger': logger}
 									self.thread = YoutubeDownload(url, ydl_opts)
-									self.thread.start()
-								except: # no corresponding format found, skip
-									pass
+									self.thread.start()	
+								except:
+									try:
+										ydl_opts = {'format':'133+140','logger': logger}
+										self.thread = YoutubeDownload(url, ydl_opts)
+										self.thread.start()
+									except: # no corresponding format found, skip
+										pass
+
 
 
 
